@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "student": {
+      "title": "Student",
+      "description": "A student enrolled in the dance school.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "danceForm": { "type": "string" },
+        "enrolledAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["active", "inactive", "pending"] },
+        "branch": { "type": "string" }
+      },
+      "required": ["name", "email", "phone", "danceForm"]
+    },
+    "payment": {
+      "title": "Payment",
+      "description": "A payment record for a student.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["paid", "unpaid", "overdue"] },
+        "month": { "type": "string" },
+        "transactionId": { "type": "string" },
+        "qrCodeUsed": { "type": "boolean" }
+      },
+      "required": ["studentId", "amount", "date", "status", "month"]
+    },
+    "event": {
+      "title": "Event",
+      "description": "An academy event or holiday.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "type": { "type": "string", "enum": ["Workshop", "Performance", "Holiday"] },
+        "description": { "type": "string" }
+      },
+      "required": ["title", "date", "type"]
+    }
+  },
+  "firestore": {
+    "/students/{studentId}": {
+      "schema": "student",
+      "description": "Collection of students."
+    },
+    "/payments/{paymentId}": {
+      "schema": "payment",
+      "description": "Collection of payments."
+    },
+    "/events/{eventId}": {
+      "schema": "event",
+      "description": "Collection of events."
+    }
+  }
+}
